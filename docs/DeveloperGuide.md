@@ -1863,7 +1863,7 @@ with module, lecture and keyword supplied.
 
     Use case ends.
 
-#### Tag a module
+#### Tag a Module
 
 **MSS**
 
@@ -1893,7 +1893,7 @@ with module, lecture and keyword supplied.
 
     Use case resumes at step 1.
 
-#### Tag a lecture
+#### Tag a Lecture
 
 **Precondition: User has added a module and a lecture**
 
@@ -1937,7 +1937,7 @@ with module, lecture and keyword supplied.
 
     Use case resumes at step 1.
 
-#### Tag a video
+#### Tag a Video
 
 **Precondition: User has added a module, a lecture, and a video**
 
@@ -1994,7 +1994,7 @@ with module, lecture and keyword supplied.
 
     Use case resumes at step 1.
 
-#### Untag a module
+#### Untag a Module
 
 **Precondition: User has added a module, and has tagged that module**
 
@@ -2032,7 +2032,7 @@ with module, lecture and keyword supplied.
 
     Use case resumes at step 1.
 
-#### Untag a lecture
+#### Untag a Lecture
 
 **Precondition: User has added a module and a lecture, and has tagged the lecture**
 
@@ -2082,7 +2082,7 @@ with module, lecture and keyword supplied.
 
     Use case resumes at step 1.
 
-#### Untag a video
+#### Untag a Video
 
 **Precondition: User has added a module, a lecture, and a video, and has tagged the video**
 
@@ -2145,12 +2145,12 @@ with module, lecture and keyword supplied.
 
     Use case resumes at step 1.
 
-#### Export all modules to a new file
+#### Export all Modules to a New File
 
 **MSS**
 
 1. User requests to save all data in the current tracker to a new file.
-2. User specifies the name of the file to save to.
+2. User specifies the path of the file to save to.
 3. All modules data in the current tracker is saved to the file.
 
    Use case ends.
@@ -2169,12 +2169,12 @@ with module, lecture and keyword supplied.
 
     Use case resumes at step 1.
 
-#### Export all modules to an existing file
+#### Export all Modules to an Existing File
 
 **MSS**
 
 1. User requests to save all data in the current tracker to an existing file.
-2. User specifies the name of the file to save to, as well as indicating that user wants to overwrite the existing file.
+2. User specifies the path of the file to save to, as well as indicating that user wants to overwrite the existing file.
 3. All modules data in the current tracker is saved to the file.
 
    Use case ends.
@@ -2199,12 +2199,12 @@ with module, lecture and keyword supplied.
 
     Use case resumes at step 1.
 
-#### Import all modules from a file
+#### Import all Modules from a File
 
 **MSS**
 
 1. User requests to import all modules data from an existing file.
-2. User specifies the name of the file to import from.
+2. User specifies the path of the file to import from.
 3. All modules data in the file is imported to the current tracker.
 
    Use case ends.
@@ -2235,12 +2235,12 @@ with module, lecture and keyword supplied.
 
     Use case resumes at step 1.
 
-#### Import all modules from a file
+#### Import all Modules from a File, Overwriting Modules if They Exist in Le Tracker
 
 **MSS**
 
-1. User requests to import all modules data from an existing file.
-2. User specifies the name of the file to import from.
+1. User requests to import all modules data from an existing file, with some modules already exist in the current tracker.
+2. User specifies the path of the file to import from, as well as indicating that user wants to overwrite modules if they exist in the current tracker. 
 3. All modules data in the file is imported to the current tracker.
 
    Use case ends.
@@ -2249,34 +2249,28 @@ with module, lecture and keyword supplied.
 
 - 2a. File name is invalid.
 
-  - 2a1. Le Tracker shows an error message.
+    - 2a1. Le Tracker shows an error message.
 
-    Use case resumes at step 1.
+      Use case resumes at step 1.
 
 - 2b. File does not exist.
 
-  - 2b1. Le Tracker shows an error message.
+    - 2b1. Le Tracker shows an error message.
 
-    Use case resumes at step 1.
+      Use case resumes at step 1.
 
 - 2c. File cannot be read.
 
-  - 2c1. Le Tracker shows an error message.
+    - 2c1. Le Tracker shows an error message.
 
-    Use case resumes at step 1.
+      Use case resumes at step 1.
 
-- 2d. Some modules already exist in the current tracker.
-
-  - 2d1. Le Tracker shows an error message.
-
-    Use case resumes at step 1.
-
-#### Import some modules from a file
+#### Import some Modules from a File
 
 **MSS**
 
 1. User requests to import some modules data from an existing file.
-2. User specifies the name of the file to import from, as well as references to the modules to be imported.
+2. User specifies the path of the file to import from, as well as references to the modules to be imported.
 3. Modules data in the file is imported to the current tracker.
 
    Use case ends.
@@ -2312,6 +2306,42 @@ with module, lecture and keyword supplied.
   - 2e1. Le Tracker shows an error message.
 
     Use case resumes at step 1.
+
+#### Import some Modules from a File, Overwriting Modules if They Exist in Le Tracker
+
+**MSS**
+
+1. User requests to import some modules data from an existing file.
+2. User specifies the path of the file to import from, as well as references to the modules to be imported and indicating that user wants to overwrite modules if they exist in the current tracker..
+3. Modules data in the file is imported to the current tracker.
+
+   Use case ends.
+
+**Extensions**
+
+- 2a. File name is invalid.
+
+    - 2a1. Le Tracker shows an error message.
+
+      Use case resumes at step 1.
+
+- 2b. File does not exist.
+
+    - 2b1. Le Tracker shows an error message.
+
+      Use case resumes at step 1.
+
+- 2c. File cannot be read.
+
+    - 2c1. Le Tracker shows an error message.
+
+      Use case resumes at step 1.
+
+- 2d. Specified modules do not exist in the saved file.
+
+    - 2d1. Le Tracker shows an error message.
+
+      Use case resumes at step 1.
 
 #### Clear all Modules
 

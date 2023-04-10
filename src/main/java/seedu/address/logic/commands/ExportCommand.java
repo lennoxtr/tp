@@ -21,11 +21,11 @@ public class ExportCommand extends Command {
     public static final String MESSAGE_USAGE = "\n" + COMMAND_WORD + ":\n"
             + "(1) Archive all modules currently in Le Tracker to a new file.\n"
             + "Parameter: "
-            + "{file_name}\n"
+            + "{file_path}\n"
             + "Example: " + COMMAND_WORD + " hello.json\n\n"
             + "(2) Archive all modules currently in Le Tracker to an existing file.\n"
             + "Parameter: "
-            + "{file_name} " + PREFIX_OVERWRITE + "\n"
+            + "{file_path} " + PREFIX_OVERWRITE + "\n"
             + "Example: " + COMMAND_WORD + " hello.json " + PREFIX_OVERWRITE;
     public static final String MESSAGE_SUCCESS = "All modules archived to %1$s";
 
