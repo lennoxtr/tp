@@ -2242,8 +2242,8 @@ with module, lecture and keyword supplied.
 
 **MSS**
 
-1. User requests to import all modules data from an existing file, with some modules already exist in the current tracker.
-2. User specifies the path of the file to import from, as well as indicating that user wants to overwrite modules if they exist in the current tracker. 
+1. User requests to import all modules data from an existing file.
+2. User specifies the path of the file to import from, as well as indicating that user is willing to overwrite modules if they exist in the current tracker. 
 3. All modules data in the file is imported to the current tracker.
 
    Use case ends.
@@ -2315,7 +2315,7 @@ with module, lecture and keyword supplied.
 **MSS**
 
 1. User requests to import some modules data from an existing file.
-2. User specifies the path of the file to import from, as well as references to the modules to be imported and indicating that user wants to overwrite modules if they exist in the current tracker..
+2. User specifies the path of the file to import from, as well as references to the modules to be imported and indicating that user is willing to overwrite modules if they exist in the current tracker..
 3. Modules data in the file is imported to the current tracker.
 
    Use case ends.
