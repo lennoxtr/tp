@@ -52,6 +52,7 @@ Before reading, it is recommended that developers read the [User Guide](https://
   - [Non-Functional Requirements](#non-functional-requirements)
   - [Glossary](#glossary)
 - [Appendix: Instructions for manual testing](#appendix-instructions-for-manual-testing)
+- [Appendix: Effort](#appendix-effort)
 - [Appendix: Planned enhancements](#appendix-planned-enhancements)
 
 ---
@@ -2605,70 +2606,97 @@ Some incorrect commands to try from root context:
 
 | Test Case                                   | Expected Result |
 | ------------------------------------------- | --------------- |
-| `delete CS2040S`                            | CS2040S is deleted |
-| 1. `nav CS2040S` <br> 2. `delete CS2040S /r`| Same as previous |
-| `delete CS2040S, ST2334`                    | CS2040S and ST2334 are deleted |
-| 1. `nav CS2040S` <br> 2. `delete CS2040S, ST2334 /r`| Same as previous |
-| 1. `delete CS2040S` <br> 2. `delete CS2040S` | Alert user that CS2040S does not exist and cannot be deleted. No change made to Le Tracker |
-| 1. `delete CS2040S` <br> 2. `delete CS2040S, ST2334` | Same as previous |
-| 1. `delete CS2040S, ST2334` <br> 2. `delete CS2040S, ST2334` | Alert user that CS2040S and ST2334 do not exist and cannot be deleted. No change made to Le Tracker |
+| `delete CS2040S`                            | **Message:**<br/>`Deleted Module: CS2040S`<br/>**List Updates** Entry for "CS2040S" removed<br/>**Context**: `/r` |
+| 1. `nav CS2040S`<br/> 2. `delete CS2040S /r`| **Message:** Same as previous<br/>**List Updates:** Show list of remaining modules, where entry for "CS2040S" is removed<br/>**Context:** `/r` |
+| 1. `nav CS2040S`<br/>2. `nav Week 1`<br/>3. `delete CS2040S /r`| Same as previous |
+| 1. `nav ST2334`<br/>2. `delete CS2040S /r` | **Message:** Same as previous<br/>**List Updates:** None<br/>**Context**: `/mod ST2334`|
+| `delete CS2040S, ST2334`                    | **Message:**<br/>`2 Modules deleted（CS2040S, ST2334)`<br/>**List Updates:** Entry for "CS2040S" and "ST2334" are removed<br/>**Context:** `/r` |
+| 1. `nav CS2040S`<br/>2. `delete CS2040S, ST2334 /r`| **Message:** Same as previous<br/>**List Updates:** Show list of remaining modules, where entries for "CS2040S" and "ST2334" are removed<br/>**Context:** `/r` |
+| 1. `nav CS2040S`<br/>2. `nav Week 1`<br/>3. `delete CS2040S, ST2334 /r`| Same as previous |
+
+Some incorrect commands to try from root context:
+- `delete` (incorrect command format)
+- `delete mod23` (invalid module code format)
+- `delete CS2040S, CS2040S` (duplicate module code)
+- `delete CS1234` (module does not exist)
 
 ### Delete Lecture(s)
 
 | Test Case                                   | Expected Result |
 | ------------------------------------------- | --------------- |
-| `delete Week 1 /mod CS2040S`                | Week 1 of CS2040S is deleted |
-| 1. `nav CS2040S` <br> 2. `delete Week 1`    | Same as previous |
-| `delete Week 1, Week 2 /mod CS2040S`        | Week 1 and Week 2 of CS2040S are deleted |
-| 1. `delete Week 1 /mod CS2040S` <br> 2. `delete Week 1 /mod CS2040S` | Alert user that Week 1 of CS2040S does not exist and cannot be deleted |
-| 1. `delete Week 1 /mod CS2040S` <br> 2. `delete Week 1, Week 2 /mod CS2040S` | Same as previous |
-| 1. `delete Week 1, Week 2 /mod CS2040S` <br> 2. `delete Week 1, Week 2 /mod CS2040S` | Alert user that Week 1 and Week 2 of CS2040S do not exist and cannot be deleted |
-| `delete Week 1, Week 1, Week 3 /mod CS2040S` | Alert user that Week 1 was duplicated in command |
-| `delete Week 1, Week 1, Week 1 /mod CS2040S` | Same as previous |
-| 1. `delete CS2040S` <br> 2. `delete Week 1 /mod CS2040S` | Alert user that CS2040S does not exist |
-| 1. `delete CS2040S` <br> 2. `delete Week 1, Week 2 /mod CS2040S` | Same as previous |
+| `delete Week 1 /mod CS2040S`                | **Message:**<br/>`Deleted Lecture: Week 1 from Module CS2040S`<br/>**List Updates:** Total number of lectures in the entry for "CS2040S" is updated to 5<br/>**Context**: `/r` |
+| 1. `nav CS2040S`<br/> 2. `delete Week 1`    | **Message:** Same as previous<br/>**List Updates:** Entry for "Week 1" removed<br/>**Context**: `/mod CS2040S` |
+| 1. `nav CS2040S`<br/>2. `nav Week 1`<br/>3. `delete Week 1 /mod CS2040S`| **Message:** Same as previous<br/>**List Updates:** Show list of remaining lectures of CS2040S, where entry for "Week 1" is removed<br/>**Context**: `/mod CS2040S` |
+| 1. `nav CS2040S`<br/>2. `delete Week 1, Week 2 /mod CS2040S`        | **Message:**<br/><code>2 Lectures deleted from Module CS2040S:<br/>Week 1, Week 2</code><br/>**List Updates:** Entries for "Week 1" and "Week 2" removed<br/>**Context**: `/mod CS2040S` |
+| 1. `nav CS2040S`<br/>2. `nav Week 2`<br/>3. `delete Week 1, Week 2 /mod CS2040S` | **Message:** Same as previous<br/>**List Updates:** Show list of remaining lectures of CS2040S, where entries for "Week 1" and "Week 2" are removed<br/>**Context**: `/mod CS2040S` |
+
+Some incorrect commands to try from root context:
+- `delete Week #1 /mod CS2040S` (invalid lecture name format)
+- `delete Week 1 /mod mod23` (invalid module code format)
+- `delete Week 1, Week 1 /mod CS2040S` (duplicate lecture names)
+- `delete Topic 1 /mod CS2040S` (lecture does not exist in module)
+- `delete Week 1 /mod NOT123` (module does not exist)
 
 ### Delete Video(s)
 
 | Test case                                   | Expected Result |
 | ------------------------------------------- | --------------- |
-| `delete Vid 1 /mod CS2040S /lec Week 1`     | Vid 1 of Week 1 of CS2040S is deleted |
-| `delete Vid 1, Vid 2 /mod CS2040S /lec Week 1` | Vid 1 and Vid 2 of Week 1 of CS2040S are deleted |
-| 1. `delete Vid 1 /mod CS2040S /lec Week 1` <br> 2. `delete Vid 1 /mod CS2040S /lec Week 1` | Alert user that Vid 1 of Week 1 of CS2040S does not exist and cannot be deleted |
-| 1. `delete Vid 1 /mod CS2040S /lec Week 1` <br> 2. `delete Vid 1, Vid 2 /mod CS2040S /lec Week 1` | Same as previous |
-| 1. `delete Vid 1, Vid 2 /mod CS2040S /lec Week 1`  <br> 2. `delete Vid 1, Vid 2 /mod CS2040S /lec Week 1` | Alert user that Vid 1 and Vid 2 of Week 1 of CS2040S do not exist and cannot be deleted |
-| `delete Vid 1, Vid 3, Vid 1 /mod CS2040S /lec Week 1` | Alert user that Vid 1 was duplicated in command |
-| `delete Vid 1, Vid 1, Vid 1 /mod CS2040S /lec Week 1` | Same as previous |
-| 1. `delete CS2040S` <br> 2. `delete Vid 1 /mod CS2040S /lec Week 1` | Alert user that CS2040S does not exist |
-| 1. `delete CS2040S` <br> 2. `delete Vid 1, Vid 2 /mod CS2040S /lec Week 1` | Same as previous |
-| 1. `delete Week 1 /mod CS2040S` <br> 2. `delete Vid 1 /mod CS2040S /lec Week 1` | Alert user that Week 1 of CS2040S does not exist |
-| 1. `delete Week 1 /mod CS2040S` <br> 2. `delete Vid 1, Vid 2 /mod CS2040S /lec Week 1` | Same as previous |
+| `delete Vid 1 /mod CS2040S /lec Week 1`     | **Message:**<br/>`Deleted Video: Vid 1 from Lecture Week 1 in Module CS2040S`<br/>**List Updates:** None<br/>**Context**: `/r` |
+| 1. `nav CS2040S`<br/>2. `delete Vid 1 /lec Week 1` | **Message:** Same as previous<br/>**List Updates:** Total number of videos for the entry for "Week 1" is updated to 1<br/>**Context**: `/mod CS2040S` |
+| 1. `nav CS2040S`<br/>2. `nav Week 1`<br/>3. `delete Vid 1` | **Message:** Same as previous<br/>**List Updates:** Entry for "Vid 1" removed<br/>**Context**: `/mod CS2040S /lec Week 1` |
+| 1. `nav CS2040S`<br/>2. `nav Week 1`<br/>3. `delete Vid 1, Vid 2 /mod CS2040S /lec Week 1` | **Message:**<br/>`2 Videos deleted from Module CS2040S > Lecture Week 1`<br/>**List Updates:** Entry for "Vid 1" and "Vid 2" are removed <br/>**Context**: `/mod CS2040S /lec Week 1`|
+
+Some incorrect commands to try from root context:
+- `delete Vid 1 /lec Week 1` (invalid command format)
+- `delete V!d 1 /mod CS2040S /lec Week 1` (invalid video name format)
+- `delete Vid 1 /mod CS2040S /lec Week #1` (invalid lecture name format)
+- `delete Vid 1 /mod mod123 /lec Week 1` (invalid module code format)
+- `delete Vid 1, Vid 1 /mod CS2040s /lec Week 1` (duplicate video names)
+- `delete VidNotExist /mod CS2040S /lec Week 1` (video does not exist in lecture)
+- `delete Vid 1 /mod CS2040S /lec LecDoesNotExist` (lecture does not exist in module)
+- `delete Vid 1 /mod NOT123 /lec Week 1` (module does not exist)
 
 ### Mark a Video
 
 | Test Case                                    | Expected Result |
 | -------------------------------------------- | --------------- |
-| `mark Vid 1 /mod CS2040S /lec Week 1`        | Vid 1 of CS2040S Week 1 marked as watched |
-| 1. `nav CS2040S` <br> 2. `mark Vid 1 /lec Week 1` | Same as previous | <!--TODO: do we need this?-->
-| 1. `nav CS2040S` <br> 2. `nav Week 1` <br> 3. `mark Vid 1` | Same as previous |
-| `mark Vid 1, Vid 2 /mod CS2040S /lec Week 1` | Vid 1 and Vid 2 of CS2040S Week 1 marked as watched |
-| 1. `mark Vid 1 /mod CS2040S /lec Week 1` <br> 2. `mark Vid 1 /mod CS2040S /lec Week 1` | Alert user that Vid 1 of CS2040S were already marked as watched |
-| 1. `mark Vid 1 /mod CS2040S /lec Week 1` <br> 2. `mark Vid 1, Vid 2 /mod CS2040S /lec Week 1` | Same as previous |
-| 1. `mark Vid 1, Vid 2 /mod CS2040S /lec Week 1` <br> 2. `mark Vid 1, Vid 2 /mod CS2040S /lec Week 1` | Alert user that Vid 1 and Vid 2 of CS2040S were already marked as watched |
-| `mark Vid 1, Vid 1 /mod CS2040S /lec Week 1` | Alert user that duplicate Vid 1 was specified |
-| `mark Vid 1, Vid 1, Vid 1 /mod CS2040S /lec Week 1` | Same as previous |
+| `mark Vid /mod CS2040S /lec Week 6`        | **Message:**<br/>`Successfully marked 1 Video in Lecture Week 6 Module CS2040S: Vid`<br/>**List Updates:** Watch progress of entry for "CS2040S" updated to show a full bar with `Covered 6/6 lectures` |
+| 1. `nav CS2040S`<br/>2. `mark Vid /lec Week 6` | **Message:** Same as previous<br/>**List Updates:** Watch progress of entry for "Week 6" is updated to show a full bar with `Watched 1/1 videos` |
+| 1. `nav CS2040S`<br/>2. `nav Week 6` <br> 3. `mark Vid` | **Message:** Same as previous<br/>**List Updates:** Watch progress of entry for "Vid" is updated to show `Watched` |
+| 1. `nav ST2334`<br/>2. `mark Vid /mod CS2040S /lec Week 6` | **Message:** Same as previous<br/>**List Updates:** None |
+| 1. `nav CS2040S`<br/>2. `nav Week 6`<br/>3. `add Vid 2`<br/>4. `mark Vid, Vid2`| **Message:** `Successfully marked 2 Videos in Lecture Week 6 Module CS2040S: Vid, Vid 2`<br/>**List Updates:** Watch progress of entries "Vid" and "Vid 2" are updated to show `Watched` |
+
+Some incorrect commands to try from root context:
+- `mark` (invalid command format)
+- `mark V!d /mod CS2040S /lec Week 6` (invalid video name format)
+- `mark Vid /mod CS2040S /lec Week #6` (invalid lecture name format)
+- `mark Vid /mod mod123 /lec Week 6` (invalid module code format)
+- `mark Vid, Vid /mod CS2040s /lec Week 6` (duplicate video names)
+- `mark VidNotExist /mod CS2040S /lec Week 6` (video does not exist in lecture)
+- `mark Vid /mod CS2040S /lec LecDoesNotExist` (lecture does not exist in module)
+- `mark Vid /mod NOT123 /lec Week 6` (module does not exist)
+- `mark Vid 1 /mod CS2040S /lec Week 1` (video already marked)
+- `mark Vid 1, Vid 2 /mod CS2040S /lec Week 1` (videos already marked)
 
 ### Unmark a Video
 
 | Test Case                                    | Expected Result |
 | -------------------------------------------- | --------------- |
-| `unmark Vid 1 /mod CS2040S /lec Week 1`      | Vid 1 of CS2040S Week 1 marked as unwatched |
-| 1. `unmark Vid 1 /mod CS2040S /lec Week 1` <br> 2. `unmark Vid 1 /mod CS2040S /lec Week 1` | Alert user that Vid 1 of CS2040S were already marked as unwatched |
-| `unmark Vid 1, Vid 2 /mod CS2040S /lec Week 1` | Vid 1 and Vid 2 of CS2040S Week 1 marked as unwatched |
-| 1. `unmark Vid 1 /mod CS2040S /lec Week 1` <br> 2. `unmark Vid 1, Vid 2 /mod CS2040S /lec Week 1` | Same as previous |
-| 1. `unmark Vid 1, Vid 2 /mod CS2040S /lec Week 1` <br> 2. `unmark Vid 1, Vid 2 /mod CS2040S /lec Week 1` | Same as previous |
-| `unmark Vid 1, Vid 1 /mod CS2040S /lec Week 1` | Alert user that duplicate Vid 1 was specified |
-| `unmark Vid 1, Vid 1, Vid 1 /mod CS2040S /lec Week 1` | Same as previous |
+| `unmark Vid 1 /mod CS2040S /lec Week 1`      | **Message:**<br/>`Successfully unmarked Video in Lecture Week 1 Module CS2040S: Vid 1`<br/>**List Updates:** Watch progress of entry for "CS2040S" is updated to show a less filled bar with `Covered 4/6 lectures` |
+| 1. `nav CS2040S`<br/>2. `unmark Vid 1 /lec Week 1`| **Message:** Same as previous<br/>**List Updates:** Watch progress of entry for "Week 1" is updated to show a half full bar with `Watched 1/2 videos` |
+| 1. `nav CS2040S`<br/>2. `nav Week 1`<br/>3. `unmark Vid 1, Vid 2` | **Message:**<br/>`Successfully unmarked 2 Videos in Lectre Week 1 Module CS2040S: Vid 1, Vid 2`<br/>**List Updates:** Watch progress of entries for "Vid 1" and "Vid 2" are updated to show `Not Watched` |
+| 1. `nav CS2040S`<br/>2. `nav Week 1`<br/>3. `unmark Vid 1, Vid 2`<br/>4. `unmark Vid 1, Vid 2` | Same as previous |
+
+Some incorrect commands to try from root context:
+- `unmark` (invalid command format)
+- `unmark V!d 1 /mod CS2040S /lec Week 1` (invalid video name format)
+- `unmark Vid 1 /mod CS2040S /lec Week #1` (invalid lecture name format)
+- `unmark Vid 1 /mod mod123 /lec Week 1` (invalid module code format)
+- `unmark Vid 1, Vid 1 /mod CS2040s /lec Week 1` (duplicate video names)
+- `unmark VidNotExist /mod CS2040S /lec Week 1` (video does not exist in lecture)
+- `unmark Vid 1 /mod CS2040S /lec LecDoesNotExist` (lecture does not exist in module)
+- `unmark Vid 1 /mod NOT123 /lec Week 1` (module does not exist)
+- `unmark Vid /mod CS2040S /lec Week 6` (video already unmarked)
 
 ### Tag a Module
 
@@ -2779,9 +2807,27 @@ Some incorrect commands to try from root context:
 
 | Test Case | Expected Result |
 | --------- | --------------- |
-| `clear`   | All modules deleted from Le Tracker |
-| 1. `nav CS2040S` <br> 2. `clear` | Same as previous |
+| `clear`   | **Message:**<br/>`Le Tracker has been cleared!`<br/>**List Updates:** Shows empty list |
+| 1. `nav CS2040S` <br> 2. `clear` | **Message:**<br/> Same as previous<br/>**List Updates:** Shows empty list in <img src="images/RootContext.png" height="20"> |
 | 1. `nav CS2040S` <br> 2. `nav Week 1` <br> 3. `clear` | Same as previous |
+
+---
+
+## Appendix: Effort
+
+### Adapting Model Component
+
+The main difficulty with developing Le Tracker was adapting the **Model** component to support a hierarchical structure. In the [AddressBook Level-3](https://github.com/nus-cs2103-AY2223S2/tp) codebase that Le Tracker is forked from, the **Model** component is non-hierarchical, utilising `Person` objects to store person contact details. As Le Tracker requires `Module`s to contain `Lecture`s which in turn contains `Video`s, a hierarchical structure was needed.
+
+This required a large amount of change to the codebase of the **Model** component. It also pushed us to consider the pros and cons of breaking immutability of the various classes in the component. By breaking immutability, updating of fields would be much easier and the impacts on the **UI** component could be minimised. However, this introduces a risk of making bugs more difficult to diagnose. We ultimately decided to have `Module` and `Lecture` be immutable such that `Lecture` objects and `Video` objects can be added to them respectively. However, we limited the access to these immutable methods through the use of `ReadOnlyModule` and `ReadOnlyLecture` interfaces.
+
+### Adapting Commands
+
+Due to the use of a hierarchical structure in the **Model** component, we had to reconsider how commands should behave and how they should be parsed. The code for each command is no longer as straightforward as in [AddressBook Level-3](https://github.com/nus-cs2103-AY2223S2/tp). Command parsing must now determine the intent of the user via specific arguments in the user's input (specifically `/mod` and `/lec`). This is necessary to determine for a command such as `add`, is the user attempting to add a module, a lecture, or a video.
+
+By introducing the `/mod` and `/lec` arguments, user commands are now much longer and usability has taken a hit as a result. To counter this issue, we introduced a navigation system which auto injects the `/mod` and `/lec` arguments depending on the context. More information about what the navigation system does can be found in the [User Guide](https://ay2223s2-cs2103-f10-2.github.io/tp/UserGuide.html#navigation).
+
+---
 
 ## Appendix: Planned enhancements
 
@@ -2990,3 +3036,22 @@ Tags should only contain alphanumeric characters, and they should not be blank.
 The following tags provided are invalid:
 - T@g
 ```
+
+### Feature flaw #6: Unmark Command does not alert user of already unmarked videos
+
+**Description**
+
+`mark` and `unmark` are similar commands that would mark a video as watched or unwatched respectively. Since these 2 commands are similar, they should have a similar functionality and error messages.
+
+However, the current implementation is flawed as follows:
+  - `mark` one or multiple videos: if any video is already marked as watched, an **error** message is shown to the user
+  - `unmark` one video: if the video is already marked as unwatched, an **error** message is shown to the user
+  - `unmark` multiple videos: if any video is already marked as unwatched, a **success** message is shown
+
+As listed above, calling `unmark` on multiple videos has a different result as compared to its counterparts.
+
+**Proposed Solution**
+
+Set `unmark` for multiple videos to catch when any of the videos specified have already been marked as unwatched, and alert thte user with a similar error message to its counterparts.
+
+This implementation would allow for users to better realise what their commands are doing, especially if they are in a different context that does not allow them to visualise the effect of their commands.
